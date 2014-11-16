@@ -1,7 +1,9 @@
 var express = require('express')
 	, load = require('express-load')
 	, app = express()
-	, error = require('./middleware/error');
+	, error = require('./middleware/error')
+	, server = require('http').createServer(app)
+	, io = require('socket.io').listen(server);
 
 // view engine setup
 app.set('views', __dirname + '/views');
@@ -17,7 +19,8 @@ app.use(error.notFound);
 app.use(error.serverError);
 
 load('models').then('controllers').then('routes').into(app);
+load('sockets').into(io);
 
-app.listen(3000, function() {
+server.listen(3000, function() {
   console.log("NTalk no ar.");
 });
