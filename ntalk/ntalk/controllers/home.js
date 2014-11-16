@@ -3,12 +3,12 @@ module.exports = function(app) {
     index: function(req, res) {
       res.render('home/index');
     },
-    login: fcuntion(req, res) {
+    login: function(req, res) {
       var email = req.body.usuario.email;
       var nome = req.body.usuario.nome;
       if (email && nome) {
         var usuario = req.body.usuario;
-        usuarios['contatos'] = [];
+        usuario['contatos'] = [];
         req.session.usuario = usuario;
         res.redirect('/contatos');
       } else {

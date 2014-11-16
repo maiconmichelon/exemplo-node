@@ -1,6 +1,7 @@
 var express = require('express')
 	, load = require('express-load')
-	, app = express();
+	, app = express()
+	, error = require('./middleware/error');
 
 // view engine setup
 app.set('views', __dirname + '/views');
@@ -9,7 +10,11 @@ app.use(express.cookieParser('ntalk'));
 app.use(express.session());
 app.use(express.json());
 app.use(express.urlencoded());
+app.use(express.methodOverride());
+app.use(app.router);
 app.use(express.static(__dirname + "/public"));
+app.use(error.notFound);
+app.use(error.serverError);
 
 load('models').then('controllers').then('routes').into(app);
 
