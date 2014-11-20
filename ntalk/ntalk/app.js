@@ -3,7 +3,10 @@ var express = require('express')
 	, app = express()
 	, error = require('./middleware/error')
 	, server = require('http').createServer(app)
-	, io = require('socket.io').listen(server);
+	, io = require('socket.io').listen(server)
+	, mongoose = require('mongoose');
+
+global.db = mongoose.connect('mongodb://localhost/ntalk');
 
 const KEY = 'ntalk.sid', SECRET = 'ntalk';
 var cookie = express.cookieParser(SECRET)
