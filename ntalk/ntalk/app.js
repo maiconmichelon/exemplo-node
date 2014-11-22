@@ -15,6 +15,7 @@ var cookie = express.cookieParser(SECRET)
 	, session = express.session(sessOpts);
 
 // view engine setup
+app.use(express.logger());
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(cookie);
@@ -27,6 +28,7 @@ app.use(express.static(__dirname + "/public"));
 app.use(error.notFound);
 app.use(error.serverError);
 
+io.set('log level', 1);
 io.set('authorization', function(data, accept) {
 	cookie(data, {}, function(err) {
 		var sessionID = data.signedCookies[KEY];
